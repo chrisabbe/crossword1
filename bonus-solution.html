@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bonus Jumbo Puzzle — Solution</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fafafa;
+        margin: 0;
+        padding: 0;
+        color: #222;
+    }
+
+    /* Header */
+    .header {
+        background: #008080;
+        color: white;
+        text-align: center;
+        padding: 26px 10px;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+    }
+
+    .bonus-tag {
+        text-align: center;
+        margin-top: 6px;
+        font-size: 17px;
+        color: #caa843;
+        font-weight: bold;
+        letter-spacing: 0.3px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #444;
+        font-style: italic;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        font-size: 15px;
+    }
+
+    /* Layout */
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 10px;
+    }
+
+    .grid-wrapper {
+        display: flex;
+        justify-content: center;
+        overflow-x: auto; /* allow side scroll for jumbo grids */
+        margin-bottom: 20px;
+    }
+
+    table.solution {
+        border-collapse: collapse;
+    }
+
+    table.solution td {
+        width: 34px;
+        height: 34px;
+        border: 1px solid #777;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #005f5f; /* elegant dark teal */
+        background: white;
+    }
+
+    /* Gold blocks */
+    td.block {
+        background: #d8c178;
+        color: transparent !important;
+    }
+
+    /* Scaling for mobile */
+    @media (max-width: 600px) {
+        table.solution td {
+            width: 27px;
+            height: 27px;
+            font-size: 18px;
+        }
+    }
+    @media (max-width: 430px) {
+        table.solution td {
+            width: 23px;
+            height: 23px;
+            font-size: 16px;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="header">BONUS JUMBO PUZZLE — SOLUTION</div>
+<div class="bonus-tag">Completed Grid</div>
+<div class="subtitle">Here is the full solution to yesterday’s bonus jumbo puzzle.</div>
+
+<div class="container">
+    <div id="solutionArea"></div>
+</div>
+
+<script>
+/* Load the same puzzle.json as the interactive page */
+fetch("puzzle.json")
+    .then(r => r.json())
+    .then(data => buildSolution(data));
+
+function buildSolution(puz) {
+    const wrap = document.createElement("div");
+    wrap.className = "grid-wrapper";
+
+    const tbl = document.createElement("table");
+    tbl.className = "solution";
+
+    for (let r = 0; r < puz.rows; r++) {
+        const tr = document.createElement("tr");
+
+        for (let c = 0; c < puz.cols; c++) {
+            const td = document.createElement("td");
+
+            if (puz.solution[r][c] === "#") {
+                td.classList.add("block");
+            } else {
+                td.textContent = puz.solution[r][c].toUpperCase();
+            }
+
+            tr.appendChild(td);
+        }
+
+        tbl.appendChild(tr);
+    }
+
+    wrap.appendChild(tbl);
+    document.getElementById("solutionArea").appendChild(wrap);
+}
+</script>
+
+</body>
+</html>
